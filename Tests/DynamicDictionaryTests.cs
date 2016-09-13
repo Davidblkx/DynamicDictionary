@@ -85,5 +85,65 @@ namespace Tests
             artist["album"] -= popularAlbum;
             Assert.AreEqual<string>(Albums[0], artist.album[0]);
         }
+
+        [TestMethod]
+        public void DynamicDictionary_EventsTests()
+        {
+            DynamicDictionary d = new DynamicDictionary();
+
+            int countAdd = 0;
+            int countRemove = 0;
+            int countChanged = 0;
+            int countClear = 0;
+            int countOther = 0;
+
+            d.OnChange += (sender, e) =>
+            {
+                switch (e.EventType)
+                {
+                    case DynamicDictionaryChangedType.AddedValue:
+                        countAdd++;
+                        break;
+
+                    case DynamicDictionaryChangedType.RemovedValue:
+                        countRemove++;
+                        break;
+
+                    case DynamicDictionaryChangedType.ChangedValue:
+                        countChanged++;
+                        break;
+
+                    case DynamicDictionaryChangedType.Clear:
+                        countClear++;
+                        break;
+
+                    default:
+                        countOther++;
+                        break;
+                }
+            };
+
+            d["1"] = "Main";
+            Assert.AreEqual(1, countAdd);
+
+            d["1"] = "Main";
+            Assert.AreEqual(0, countChanged);
+
+            d["2"] = "New";
+            Assert.AreEqual(2, countAdd);
+
+            d["2"] = "Test";
+            Assert.AreEqual(1, countChanged);
+
+            d.Add("3", "Name");
+            Assert.AreEqual(3, countAdd);
+
+            d.Remove("3");
+            Assert.AreEqual(1, countRemove);
+
+            d.Clear();
+            Assert.AreEqual(1, countClear);
+            Assert.AreEqual(0, countOther);
+        }
     }
 }

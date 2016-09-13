@@ -60,7 +60,10 @@ namespace Dynamic
             }
             set
             {
+                var val = _list[index];
                 _list[index] = value;
+                if(val != Value)
+                RaiseEvent(DynamicDictionaryChangedType.ChangedValue, value, val);
             }
         }
 
@@ -78,11 +81,44 @@ namespace Dynamic
             }
             set
             {
-                if (_list.Contains(value))
-                    _list.RemoveAll(x => value.Equals(x));
+                var changeType = DynamicDictionaryChangedType.AddedValue;
 
                 _list.Insert(0, value);
+                RaiseEvent(changeType, value);
             }
+        }
+
+        /// <summary>
+        /// Sets the main value.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        public bool SetMainValue(int index)
+        {
+            if(index < _list.Count)
+            {
+                var val = _list[index];
+                _list.RemoveAt(index);
+                _list.Insert(0, val);
+                RaiseEvent(DynamicDictionaryChangedType.OrderValue, val);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the main value.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        public bool SetMainValue(object value)
+        {
+            if (_list.Contains(value))
+            {
+                _list.Remove(value);
+                _list.Insert(0, value);
+                RaiseEvent(DynamicDictionaryChangedType.OrderValue, value);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -92,6 +128,8 @@ namespace Dynamic
         public void Add(object newItem)
         {
             _list.Add(newItem);
+
+            RaiseEvent(DynamicDictionaryChangedType.AddedValue, newItem);
         }
 
         /// <summary>
@@ -101,6 +139,11 @@ namespace Dynamic
         public void AddRange(IEnumerable<object> values)
         {
             _list.AddRange(values);
+
+            foreach(var itm in values)
+            {
+                RaiseEvent(DynamicDictionaryChangedType.AddedValue, itm);
+            }
         }
 
         /// <summary>
@@ -111,6 +154,8 @@ namespace Dynamic
         public void Insert(int index, object newItem)
         {
             _list.Insert(index, newItem);
+
+            RaiseEvent(DynamicDictionaryChangedType.AddedValue, newItem);
         }
 
         /// <summary>
@@ -342,7 +387,11 @@ namespace Dynamic
         /// <param name="index">The zero-based index of the item to remove.</param>
         public void RemoveAt(int index)
         {
-            _list.RemoveAt(index);
+            if (index < _list.Count) {
+                var value = _list[index];
+                _list.RemoveAt(index);
+                RaiseEvent(DynamicDictionaryChangedType.RemovedValue, value);
+            }
         }
 
         /// <summary>
@@ -351,6 +400,7 @@ namespace Dynamic
         public void Clear()
         {
             _list.Clear();
+            RaiseEvent(DynamicDictionaryChangedType.Clear, null);
         }
 
         /// <summary>
@@ -384,7 +434,20 @@ namespace Dynamic
         /// </returns>
         public bool Remove(object item)
         {
-            return _list.Remove(item);
+            var hasRemoved = _list.Remove(item);
+            if (hasRemoved)
+                RaiseEvent(DynamicDictionaryChangedType.RemovedValue, item);
+            return hasRemoved;
+        }
+
+        /// <summary>
+        /// Removes the range.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        public void RemoveRange(IEnumerable<object> items)
+        {
+            foreach (var i in items)
+                Remove(i);
         }
 
         #region IEnumerable
@@ -413,7 +476,15 @@ namespace Dynamic
         /// <exception cref="System.NotImplementedException"></exception>
         public bool Equals(DynamicListValue other)
         {
-            throw new NotImplementedException();
+            if (other.GetHashCode() == this.GetHashCode()) return true;
+
+            if (other.Count != this.Count) return false;
+
+            for (int i = 0; i < Count; i++)
+                if (other[i] != _list[i])
+                    return false;
+
+            return true;
         }
 
         /// <summary>
@@ -1391,6 +1462,17 @@ namespace Dynamic
                 source.Remove(obj);
 
             return source;
+        }
+
+        public event DynamicListValueChanged OnDynamicListValueChanged;
+        private void RaiseEvent(DynamicDictionaryChangedType type, object value, object oldValue = null)
+        {
+            OnDynamicListValueChanged?.Invoke(this, new DynamicListValueChangedArgs
+            {
+                EventType = type,
+                Value = value,
+                OldValue = oldValue
+            });
         }
     }
 }

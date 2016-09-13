@@ -2,6 +2,7 @@
 using Dynamic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests
 {
@@ -278,6 +279,83 @@ namespace Tests
             Assert.AreEqual(listTestClassDefault.Count, listTestClassValue.Count);
             List<TestClass> castListTestClass = listTestClassValue.CastList<TestClass>();
             Assert.AreEqual(listTestClassDefault.Count, castListTestClass.Count);
+        }
+
+        [TestMethod]
+        public void DynamicListValue_RaiseEventTest()
+        {
+            int countAddEvent = 0;
+            int countChangeEvent = 0;
+            int countOrderEvent = 0;
+            int countRemoveEvent = 0;
+            int countClearEvent = 0;
+            int otherEventType = 0;
+
+            string mainValue = "Main Test Subject";
+            List<string> values = new List<string> { "val1", "val2", "val3" };
+
+            DynamicListValue obj = new DynamicListValue();
+
+            obj.OnDynamicListValueChanged += (sender, e) =>
+            {
+                switch (e.EventType)
+                {
+                    case DynamicDictionaryChangedType.AddedValue:
+                        countAddEvent++;
+                        break;
+
+                    case DynamicDictionaryChangedType.ChangedValue:
+                        countChangeEvent++;
+                        break;
+
+                    case DynamicDictionaryChangedType.OrderValue:
+                        countOrderEvent++;
+                        break;
+
+                    case DynamicDictionaryChangedType.RemovedValue:
+                        countRemoveEvent++;
+                        break;
+
+                    case DynamicDictionaryChangedType.Clear:
+                        countClearEvent++;
+                        break;
+
+                    default:
+                        otherEventType++;
+                        break;
+                }
+            };
+
+            obj.Value = mainValue;
+            Assert.AreEqual(1, countAddEvent);
+
+            obj.AddRange(values);
+            Assert.AreEqual(4, countAddEvent);
+
+            obj.Add(mainValue);
+            Assert.AreEqual(5, countAddEvent);
+
+            obj.SetMainValue(1);
+            Assert.AreEqual(1, countOrderEvent);
+
+            obj.SetMainValue(obj[2]);
+            Assert.AreEqual(2, countOrderEvent);
+
+            obj[0] = mainValue;
+            obj[1] = mainValue;
+            obj[2] = mainValue;
+            Assert.AreEqual(2, countChangeEvent);
+
+            obj.RemoveAt(0);
+            Assert.AreEqual(1, countRemoveEvent);
+
+            obj.RemoveRange(values);
+            Assert.AreEqual(2, countRemoveEvent);
+
+            obj.Clear();
+            Assert.AreEqual(1, countClearEvent);
+
+            Assert.AreEqual(0, otherEventType);
         }
     }
 }

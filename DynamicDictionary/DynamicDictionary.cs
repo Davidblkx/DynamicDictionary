@@ -29,11 +29,16 @@ namespace Dynamic
             {
                 if (_dictionary.ContainsKey(key))
                 {
+                    var val = _dictionary[key];
                     _dictionary[key] = new DynamicListValue(value);
+
+                    if (val != value)
+                        RaiseEvent(DynamicDictionaryChangedType.ChangedValue, key, value);
                 }
                 else
                 {
                     _dictionary.Add(key, value);
+                    RaiseEvent(DynamicDictionaryChangedType.AddedValue, key, value);
                 }
             }
         }
@@ -89,6 +94,7 @@ namespace Dynamic
         public void Add(KeyValuePair<string, object> item)
         {
             _dictionary.Add(item.Key, new DynamicListValue(item.Value));
+            RaiseEvent(DynamicDictionaryChangedType.AddedValue, item.Key, _dictionary[item.Key]);
         }
 
         /// <summary>
@@ -100,6 +106,7 @@ namespace Dynamic
         public void Add(string key, object value)
         {
             _dictionary.Add(key, new DynamicListValue(value));
+            RaiseEvent(DynamicDictionaryChangedType.AddedValue, key, _dictionary[key]);
         }
 
         /// <summary>
@@ -109,6 +116,7 @@ namespace Dynamic
         public void Clear()
         {
             _dictionary.Clear();
+            RaiseEvent(DynamicDictionaryChangedType.Clear, null, null);
         }
 
         /// <summary>
@@ -160,7 +168,13 @@ namespace Dynamic
                 value = item.Value as DynamicListValue;
 
             var pair = new KeyValuePair<string, DynamicListValue>(item.Key, value);
-            return _dictionary.Remove(pair);
+            if (_dictionary.Remove(pair))
+            {
+                RaiseEvent(DynamicDictionaryChangedType.RemovedValue, pair.Key, pair.Value);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -172,7 +186,15 @@ namespace Dynamic
         /// </returns>
         public bool Remove(string key)
         {
-            return _dictionary.Remove(key);
+            if (!_dictionary.ContainsKey(key)) return false;
+
+            var value = _dictionary[key];
+            if (_dictionary.Remove(key))
+            {
+                RaiseEvent(DynamicDictionaryChangedType.RemovedValue, key, value);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -303,6 +325,18 @@ namespace Dynamic
         public override IEnumerable<string> GetDynamicMemberNames()
         {
             return _dictionary.Keys;
+        }
+
+        public event DynamicDictionaryChanged OnChange;
+        private void RaiseEvent(DynamicDictionaryChangedType type, string key, DynamicListValue value, DynamicListValue oldValue = null)
+        {
+            OnChange?.Invoke(this, new DynamicDictionaryChangedArgs
+            {
+                EventType = type,
+                Key = key,
+                OldValue = oldValue,
+                Value = value
+            });
         }
     }
 }

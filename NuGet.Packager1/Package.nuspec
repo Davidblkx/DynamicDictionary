@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DynamicDictionary</id>
+    <version>1.0.2</version>
+    <title>DynamicDictionary</title>
+    <authors>David Pires</authors>
+    <owners></owners>
+    <description>
+      A Dynamic Dictionary where every member is a List
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      A Dynamic Dictionary where every member is a List
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/Davidblkx/DynamicDictionary</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <copyright>Copyright  2016</copyright>
+    <dependencies>
+      <group>
+        <dependency id="Microsoft.CSharp" version="4.0.1" />
+      </group>
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+  </files>
+</package>

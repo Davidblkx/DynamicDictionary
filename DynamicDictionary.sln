@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicDictionary", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.Json", "DynamicDictionary.Storage.Json\DynamicDictionary.Storage.Json.csproj", "{C1763D76-BA19-4707-8F98-3C33001B806A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.SQLite", "DynamicDictionary.Storage.SQLite\DynamicDictionary.Storage.SQLite.csproj", "{E464D7D6-1A04-4006-8BD1-204CBC663B0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{C1763D76-BA19-4707-8F98-3C33001B806A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1763D76-BA19-4707-8F98-3C33001B806A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1763D76-BA19-4707-8F98-3C33001B806A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E464D7D6-1A04-4006-8BD1-204CBC663B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E464D7D6-1A04-4006-8BD1-204CBC663B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E464D7D6-1A04-4006-8BD1-204CBC663B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E464D7D6-1A04-4006-8BD1-204CBC663B0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

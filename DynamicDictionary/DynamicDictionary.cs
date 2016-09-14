@@ -299,7 +299,7 @@ namespace Dynamic
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value.ToList())).GetEnumerator();
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Dynamic
         /// </summary>
         public bool Save()
         {
-            return Storage?.Save(this, SaveMotive.UserInput) ?? false;
+            return Storage?.Save(this, DynamicDictionarySaveMotive.UserInput) ?? false;
         }
 
         /// <summary>
@@ -369,10 +369,10 @@ namespace Dynamic
         {
             if (Storage == null) return false;
 
-            return await Storage.SaveAsync(this, SaveMotive.UserInput);
+            return await Storage.SaveAsync(this, DynamicDictionarySaveMotive.UserInput);
         }
 
-        private async void SaveAsync(SaveMotive motive)
+        private async void SaveAsync(DynamicDictionarySaveMotive motive)
         {
             if (SaveOnChange && Storage != null)
             {
@@ -391,12 +391,12 @@ namespace Dynamic
                 Value = value
             });
 
-            SaveAsync((SaveMotive)type);
+            SaveAsync((DynamicDictionarySaveMotive)type);
         }
 
         private void OnValueChanged(object sender, DynamicListValueChangedArgs e)
         {
-            SaveAsync(SaveMotive.ChangedValue);
+            SaveAsync(DynamicDictionarySaveMotive.ChangedValue);
         }
     }
 }

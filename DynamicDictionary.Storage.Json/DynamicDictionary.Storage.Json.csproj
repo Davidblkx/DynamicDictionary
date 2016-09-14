@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EDA0BAC0-EE70-4C6F-B53C-CFB448F908D6}</ProjectGuid>
+    <ProjectGuid>{C1763D76-BA19-4707-8F98-3C33001B806A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dynamic</RootNamespace>
-    <AssemblyName>DynamicDictionary</AssemblyName>
+    <RootNamespace>DynamicDictionary.Storage.Json</RootNamespace>
+    <AssemblyName>DynamicDictionary.Storage.Json</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -39,15 +39,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicDictionary.cs" />
-    <Compile Include="Enums\DynamicDictionaryChangedType.cs" />
-    <Compile Include="Events\DynamicDictionaryChangedArgs.cs" />
-    <Compile Include="DynamicListValue.cs" />
-    <Compile Include="Events\DynamicListValueChangedArgs.cs" />
-    <Compile Include="Enums\DynamicDictionarySaveMotive.cs" />
-    <Compile Include="Events\Events.cs" />
-    <Compile Include="Storage\IDynamicDictionaryStorage.cs" />
+    <Compile Include="DynamicDictionaryJsonStorage.cs" />
+    <Compile Include="DynamicListValueSerializable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicDictionary\DynamicDictionary.csproj">
+      <Project>{eda0bac0-ee70-4c6f-b53c-cfb448f908d6}</Project>
+      <Name>DynamicDictionary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

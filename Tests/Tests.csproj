@@ -36,7 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.FileSystem, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.0.1\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,11 +65,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DynamicDictionaryJsonStorageTests.cs" />
     <Compile Include="DynamicDictionaryTests.cs" />
     <Compile Include="DynamicListValueTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DynamicDictionary.Storage.Json\DynamicDictionary.Storage.Json.csproj">
+      <Project>{c1763d76-ba19-4707-8f98-3c33001b806a}</Project>
+      <Name>DynamicDictionary.Storage.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicDictionary\DynamicDictionary.csproj">
       <Project>{eda0bac0-ee70-4c6f-b53c-cfb448f908d6}</Project>
       <Name>DynamicDictionary</Name>

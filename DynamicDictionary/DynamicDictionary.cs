@@ -3,7 +3,7 @@ using System.Dynamic;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Dynamic.Storage;
 using System.Threading.Tasks;
 
 namespace Dynamic
@@ -13,6 +13,30 @@ namespace Dynamic
         private readonly IDictionary<string, DynamicListValue> _dictionary =
             new Dictionary<string, DynamicListValue>(StringComparer.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// Gets or sets the storage object that handles persistent storage.
+        /// </summary>
+        /// <value>
+        /// The storage.
+        /// </value>
+        public IDynamicDictionaryStorage Storage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [save on change].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [save on change]; otherwise, save only on user input.
+        /// </value>
+        public bool SaveOnChange { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the <see cref="dynamic"/> with the specified key.
+        /// </summary>
+        /// <value>
+        /// The <see cref="dynamic"/>.
+        /// </value>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
         public dynamic this[string key]
         {
             get
@@ -31,14 +55,14 @@ namespace Dynamic
                 {
                     var val = _dictionary[key];
                     _dictionary[key] = new DynamicListValue(value);
+                    _dictionary[key].OnDynamicListValueChanged += OnValueChanged;
 
                     if (val != value)
                         RaiseEvent(DynamicDictionaryChangedType.ChangedValue, key, value);
                 }
                 else
                 {
-                    _dictionary.Add(key, value);
-                    RaiseEvent(DynamicDictionaryChangedType.AddedValue, key, value);
+                    Add(key, value);
                 }
             }
         }
@@ -94,6 +118,7 @@ namespace Dynamic
         public void Add(KeyValuePair<string, object> item)
         {
             _dictionary.Add(item.Key, new DynamicListValue(item.Value));
+            _dictionary[item.Key].OnDynamicListValueChanged += OnValueChanged;
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, item.Key, _dictionary[item.Key]);
         }
 
@@ -106,6 +131,7 @@ namespace Dynamic
         public void Add(string key, object value)
         {
             _dictionary.Add(key, new DynamicListValue(value));
+            _dictionary[key].OnDynamicListValueChanged += OnValueChanged;
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, key, _dictionary[key]);
         }
 
@@ -327,6 +353,33 @@ namespace Dynamic
             return _dictionary.Keys;
         }
 
+        /// <summary>
+        /// Saves this instance using Storage object.
+        /// </summary>
+        public bool Save()
+        {
+            return Storage?.Save(this, SaveMotive.UserInput) ?? false;
+        }
+
+        /// <summary>
+        /// Saves the asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> SaveAsync()
+        {
+            if (Storage == null) return false;
+
+            return await Storage.SaveAsync(this, SaveMotive.UserInput);
+        }
+
+        private async void SaveAsync(SaveMotive motive)
+        {
+            if (SaveOnChange && Storage != null)
+            {
+                await Storage.SaveAsync(this, motive);
+            }
+        }
+
         public event DynamicDictionaryChanged OnChange;
         private void RaiseEvent(DynamicDictionaryChangedType type, string key, DynamicListValue value, DynamicListValue oldValue = null)
         {
@@ -337,6 +390,13 @@ namespace Dynamic
                 OldValue = oldValue,
                 Value = value
             });
+
+            SaveAsync((SaveMotive)type);
+        }
+
+        private void OnValueChanged(object sender, DynamicListValueChangedArgs e)
+        {
+            SaveAsync(SaveMotive.ChangedValue);
         }
     }
 }

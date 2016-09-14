@@ -43,7 +43,9 @@
     <Compile Include="DynamicDictionaryChangedArgs.cs" />
     <Compile Include="DynamicListValue.cs" />
     <Compile Include="DynamicListValueChangedArgs.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="IDynamicDictionaryStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

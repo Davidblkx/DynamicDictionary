@@ -39,7 +39,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicDictionarySQLiteStorage.cs" />
+    <Compile Include="DynamicDictionaryStorageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLite\SQLite.cs" />
+    <Compile Include="SQLite\SQLiteAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicDictionary\DynamicDictionary.csproj">

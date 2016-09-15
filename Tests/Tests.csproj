@@ -66,6 +66,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DynamicDictionaryJsonStorageTests.cs" />
+    <Compile Include="DynamicDictionarySQLiteStorageTests.cs" />
     <Compile Include="DynamicDictionaryTests.cs" />
     <Compile Include="DynamicListValueTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +75,10 @@
     <ProjectReference Include="..\DynamicDictionary.Storage.Json\DynamicDictionary.Storage.Json.csproj">
       <Project>{c1763d76-ba19-4707-8f98-3c33001b806a}</Project>
       <Name>DynamicDictionary.Storage.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicDictionary.Storage.SQLite\DynamicDictionary.Storage.SQLite.csproj">
+      <Project>{e464d7d6-1a04-4006-8bd1-204cbc663b0b}</Project>
+      <Name>DynamicDictionary.Storage.SQLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicDictionary\DynamicDictionary.csproj">
       <Project>{eda0bac0-ee70-4c6f-b53c-cfb448f908d6}</Project>

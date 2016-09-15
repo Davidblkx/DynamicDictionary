@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>DynamicDictionary</id>
-    <version>1.1.1</version>
-    <title>DynamicDictionary</title>
+    <id>DynamicDictionary.Storage</id>
+    <version>1.0.0</version>
+    <title>DynamicDictionary.Storage</title>
     <authors>David Pires</authors>
     <owners></owners>
     <description>
-      A Dynamic Dictionary where every member is a List
+      Persistent storage support for DynamicDictionary library
     </description>
     <releaseNotes>
     </releaseNotes>
     <summary>
-      A Dynamic Dictionary where every member is a List
+      Persistent storage support for DynamicDictionary library
     </summary>
     <language>en-US</language>
     <projectUrl>https://github.com/Davidblkx/DynamicDictionary</projectUrl>
@@ -21,9 +21,9 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <copyright>Copyright  2016</copyright>
     <dependencies>
-      <group>
-        <dependency id="Microsoft.CSharp" version="4.0.1" />
-      </group>
+        <group targetFramework="netstandard1.3">
+          <dependency id="Newtonsoft.Json" version="9.0.1" />
+        </group>
     </dependencies>
     <references></references>
     <tags></tags>

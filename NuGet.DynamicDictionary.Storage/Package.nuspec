@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicDictionary.Storage</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>DynamicDictionary.Storage</title>
     <authors>David Pires</authors>
     <owners></owners>

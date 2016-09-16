@@ -63,8 +63,8 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\netstandard1.3\DynamicDictionary.Storage.Json.dll" />
-    <Content Include="lib\netstandard1.3\DynamicDictionary.Storage.SQLite.dll" />
+    <Content Include="lib\netstandard1.4\DynamicDictionary.Storage.Json.dll" />
+    <Content Include="lib\netstandard1.4\DynamicDictionary.Storage.SQLite.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

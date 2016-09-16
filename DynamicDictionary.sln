@@ -20,8 +20,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicDictionary.Storage", "NuGet.DynamicDictionary.Storage\NuGet.DynamicDictionary.Storage.csproj", "{76EDC42C-D8AD-45D5-A21B-892F511ED806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.LiteDB", "DynamicDictionary.Storage.LiteDB\DynamicDictionary.Storage.LiteDB.csproj", "{66CA4E9B-9145-4BCF-BF07-70508F41C21F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +50,6 @@ Global
 		{76EDC42C-D8AD-45D5-A21B-892F511ED806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76EDC42C-D8AD-45D5-A21B-892F511ED806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76EDC42C-D8AD-45D5-A21B-892F511ED806}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66CA4E9B-9145-4BCF-BF07-70508F41C21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66CA4E9B-9145-4BCF-BF07-70508F41C21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66CA4E9B-9145-4BCF-BF07-70508F41C21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66CA4E9B-9145-4BCF-BF07-70508F41C21F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

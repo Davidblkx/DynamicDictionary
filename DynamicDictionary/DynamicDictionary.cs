@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Dynamic.Storage;
+using Dynamic.Serialization;
 using System.Threading.Tasks;
 
 namespace Dynamic
@@ -255,6 +256,24 @@ namespace Dynamic
         public IDictionary<string, DynamicListValue> ToDictionary()
         {
             return _dictionary;
+        }
+        public IDictionary<string, DynamicListValueSerializable> ToSerializableDictionary()
+        {
+            var serializable = new Dictionary<string, DynamicListValueSerializable>();
+            foreach (var i in _dictionary)
+            {
+                serializable.Add(i.Key, new DynamicListValueSerializable(i.Value));
+            }
+            return serializable;
+        }
+        public static DynamicDictionary FromSerializable(IDictionary<string, DynamicListValueSerializable> serializable)
+        {
+            DynamicDictionary dictionary = new DynamicDictionary();
+            foreach (var v in serializable)
+            {
+                dictionary[v.Key] = v.Value.Items;
+            }
+            return dictionary;
         }
 
         #region IEquatable

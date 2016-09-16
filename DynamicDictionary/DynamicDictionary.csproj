@@ -46,6 +46,7 @@
     <Compile Include="Events\DynamicListValueChangedArgs.cs" />
     <Compile Include="Enums\DynamicDictionarySaveMotive.cs" />
     <Compile Include="Events\Events.cs" />
+    <Compile Include="Serialization\DynamicListValueSerializable.cs" />
     <Compile Include="Storage\IDynamicDictionaryStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

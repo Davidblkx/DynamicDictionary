@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System;
+using Dynamic.Serialization;
 using System.Text;
 
 namespace Dynamic.Storage.Json
@@ -59,24 +59,12 @@ namespace Dynamic.Storage.Json
 
         public static string Serialize(DynamicDictionary dictionary, Formatting jsonFormat)
         {
-            var serializable = new Dictionary<string, DynamicListValueSerializable>();
-            foreach (var i in dictionary.ToDictionary())
-            {
-                serializable.Add(i.Key, new DynamicListValueSerializable(i.Value));
-            }
-
-            return JsonConvert.SerializeObject(serializable, jsonFormat);
+            return JsonConvert.SerializeObject(dictionary.ToSerializableDictionary(), jsonFormat);
         }
         public static DynamicDictionary Deserialize(string jsonString)
         {
-            DynamicDictionary dictionary = new DynamicDictionary();
             var serializable = JsonConvert.DeserializeObject<Dictionary<string, DynamicListValueSerializable>>(jsonString);
-            foreach (var v in serializable)
-            {
-                dictionary[v.Key] = v.Value.Items;
-            }
-
-            return dictionary;
+            return DynamicDictionary.FromSerializable(serializable);
         }
     }
 }

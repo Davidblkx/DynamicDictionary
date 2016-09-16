@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dynamic;
 
-namespace Dynamic.Storage.Json
+namespace Dynamic.Serialization
 {
     public class DynamicListValueSerializable
     {
         public DynamicListValueSerializable(DynamicListValue value)
         {
-            if (!value?.HasValue ?? true) {
+            //If null or empty initialize an empty class
+            if (!value?.HasValue ?? true)
+            {
                 BaseType = typeof(object);
                 Items = new List<object>();
                 return;
@@ -20,5 +21,10 @@ namespace Dynamic.Storage.Json
 
         public Type BaseType { get; set; }
         public List<object> Items { get; set; }
+
+        public DynamicListValue Get()
+        {
+            return new DynamicListValue(Items);
+        }
     }
 }

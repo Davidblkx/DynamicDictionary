@@ -1,4 +1,4 @@
-﻿# DynamicDictionary
+# DynamicDictionary
 
 DynamicDictionary is a Dictionary written in C# that support multiple types, 
 and where every value as potencial to be an IEnumerable of self.

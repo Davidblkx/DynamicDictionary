@@ -9,12 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAE1523F-88BA-4CD8-B499-1827928375EA}"
 	ProjectSection(SolutionItems) = preProject
+		mkdocs.yml = mkdocs.yml
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.Json", "DynamicDictionary.Storage.Json\DynamicDictionary.Storage.Json.csproj", "{C1763D76-BA19-4707-8F98-3C33001B806A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicDictionary.Storage.SQLite", "DynamicDictionary.Storage.SQLite\DynamicDictionary.Storage.SQLite.csproj", "{E464D7D6-1A04-4006-8BD1-204CBC663B0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AF6C96F4-B61E-4E9A-96FC-F7027E798CA7}"
+	ProjectSection(SolutionItems) = preProject
+		docs\index.md = docs\index.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,5 +47,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF6C96F4-B61E-4E9A-96FC-F7027E798CA7} = {AAE1523F-88BA-4CD8-B499-1827928375EA}
 	EndGlobalSection
 EndGlobal

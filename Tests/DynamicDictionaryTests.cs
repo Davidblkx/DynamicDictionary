@@ -145,5 +145,22 @@ namespace Tests
             Assert.AreEqual(1, countClear);
             Assert.AreEqual(0, countOther);
         }
+
+        [TestMethod]
+        public void DynamicDictionary_TestDistinct()
+        {
+            DynamicDictionary d = new DynamicDictionary();
+            d.UseDistinct = true;
+
+            string val1 = "Value1";
+            string val2 = "Value2";
+
+            d["value"] = val1;
+            d["value"] += val2;
+            d["value"].Add(val2);
+            d["value"] += val2;
+
+            Assert.AreEqual(2, d["value"].Count);
+        }
     }
 }

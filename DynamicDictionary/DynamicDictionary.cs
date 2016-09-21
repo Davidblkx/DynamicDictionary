@@ -31,6 +31,14 @@ namespace Dynamic
         public bool SaveOnChange { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets a value indicating whether [use distinct].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use distinct]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseDistinct { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the <see cref="dynamic"/> with the specified key.
         /// </summary>
         /// <value>
@@ -55,7 +63,7 @@ namespace Dynamic
                 if (_dictionary.ContainsKey(key))
                 {
                     var val = _dictionary[key];
-                    _dictionary[key] = new DynamicListValue(value);
+                    _dictionary[key] = new DynamicListValue(value) { UseDistinct = UseDistinct };
                     _dictionary[key].OnDynamicListValueChanged += OnValueChanged;
 
                     if (val != value)
@@ -118,7 +126,7 @@ namespace Dynamic
         /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
         public void Add(KeyValuePair<string, object> item)
         {
-            _dictionary.Add(item.Key, new DynamicListValue(item.Value));
+            _dictionary.Add(item.Key, new DynamicListValue(item.Value) { UseDistinct = UseDistinct });
             _dictionary[item.Key].OnDynamicListValueChanged += OnValueChanged;
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, item.Key, _dictionary[item.Key]);
         }
@@ -131,7 +139,7 @@ namespace Dynamic
         /// <exception cref="System.NotImplementedException"></exception>
         public void Add(string key, object value)
         {
-            _dictionary.Add(key, new DynamicListValue(value));
+            _dictionary.Add(key, new DynamicListValue(value) { UseDistinct = UseDistinct });
             _dictionary[key].OnDynamicListValueChanged += OnValueChanged;
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, key, _dictionary[key]);
         }

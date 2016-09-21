@@ -13,7 +13,7 @@ namespace Dynamic
 {
     public class DynamicListValue : DynamicObject, IEquatable<DynamicListValue>, IEnumerable<object>, IList<object>
     {
-        private readonly List<object> _list = new List<object>();
+        private List<object> _list = new List<object>();
 
         public DynamicListValue()
         {
@@ -45,6 +45,14 @@ namespace Dynamic
         }
 
         /// <summary>
+        /// Prevent collection to have duplicates
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use distinct]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseDistinct { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="System.Object"/> at the specified index.
         /// </summary>
         /// <value>
@@ -62,6 +70,10 @@ namespace Dynamic
             {
                 var val = _list[index];
                 _list[index] = value;
+
+                if (UseDistinct)
+                    _list = _list.Distinct().ToList();
+
                 if(val != Value)
                 RaiseEvent(DynamicDictionaryChangedType.ChangedValue, value, val);
             }
@@ -84,6 +96,7 @@ namespace Dynamic
                 var changeType = DynamicDictionaryChangedType.AddedValue;
 
                 _list.Insert(0, value);
+
                 RaiseEvent(changeType, value);
             }
         }
@@ -118,7 +131,11 @@ namespace Dynamic
                 RaiseEvent(DynamicDictionaryChangedType.OrderValue, value);
                 return true;
             }
-            return false;
+            else
+            {
+                Insert(0, value);
+                return true;
+            }
         }
 
         /// <summary>
@@ -128,6 +145,8 @@ namespace Dynamic
         public void Add(object newItem)
         {
             _list.Add(newItem);
+
+            if (UseDistinct) _list = _list.Distinct().ToList();
 
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, newItem);
         }
@@ -139,6 +158,8 @@ namespace Dynamic
         public void AddRange(IEnumerable<object> values)
         {
             _list.AddRange(values);
+
+            if (UseDistinct) _list = _list.Distinct().ToList();
 
             foreach(var itm in values)
             {
@@ -154,6 +175,8 @@ namespace Dynamic
         public void Insert(int index, object newItem)
         {
             _list.Insert(index, newItem);
+
+            if (UseDistinct) _list = _list.Distinct().ToList();
 
             RaiseEvent(DynamicDictionaryChangedType.AddedValue, newItem);
         }

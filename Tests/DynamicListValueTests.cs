@@ -357,5 +357,27 @@ namespace Tests
 
             Assert.AreEqual(0, otherEventType);
         }
+
+        [TestMethod]
+        public void DynamicListValue_TestDistinct()
+        {
+            DynamicListValue value = new DynamicListValue();
+
+            string elem1 = "Element 1";
+            string elem2 = "Element 2";
+            string elem3 = "Element 3";
+
+            value.UseDistinct = true;
+
+            value.Add(elem1);
+            value.Add(elem2);
+            value.Add(elem2);
+            value.Add(elem3);
+            value.Add(elem3);
+            value.Add(elem1);
+
+            Assert.AreEqual(3, value.Count);
+        }
+
     }
 }

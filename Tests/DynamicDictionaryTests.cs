@@ -162,5 +162,16 @@ namespace Tests
 
             Assert.AreEqual(2, d["value"].Count);
         }
+
+        [TestMethod]
+        public void DynamicDictionary_TestKeyEmptyInit()
+        {
+            DynamicDictionary d = new DynamicDictionary();
+
+            d["key"].Add("NewValue");
+
+            Assert.AreEqual(1, d.Count);
+            Assert.AreEqual("NewValue", (string)d["key"]);
+        }
     }
 }

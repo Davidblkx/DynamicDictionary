@@ -50,12 +50,11 @@ namespace Dynamic
         {
             get
             {
-                if (_dictionary.ContainsKey(key))
-                {
-                    dynamic obj = _dictionary[key];
-                    return obj;
-                }
-                return new DynamicListValue();
+                if (!_dictionary.ContainsKey(key))
+                    _dictionary[key] = new DynamicListValue();
+
+                dynamic obj = _dictionary[key];
+                return obj;
             }
 
             set
